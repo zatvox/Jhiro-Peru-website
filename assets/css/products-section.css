@@ -317,7 +317,7 @@
 
 .pcard__category {
   font-family: var(--font-label);
-  font-size: 0.6rem;
+  font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -326,7 +326,7 @@
 
 .pcard__name {
   font-family: var(--font-display);
-  font-size: 0.98rem;
+  font-size: 1.18rem;
   font-weight: 300;
   line-height: 1.25;
   color: var(--color-text);
@@ -335,7 +335,7 @@
 
 .pcard__moq {
   font-family: var(--font-label);
-  font-size: 0.65rem;
+  font-size: 0.85rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-text-dim);
@@ -362,7 +362,7 @@
 }
 .pcard__color-label {
   font-family: var(--font-label);
-  font-size: 0.6rem;
+  font-size: 0.9rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-text-dim);
@@ -402,7 +402,7 @@
 
 .pcard__cta {
   font-family: var(--font-label);
-  font-size: 0.6rem;
+  font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
