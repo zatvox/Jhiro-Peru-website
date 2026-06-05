@@ -5,25 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JHIRO — Importador de Materia Prima Textil Premium</title>
   <meta name="description" content="JHIRO importa y distribuye materias primas textiles de alta calidad en todo el mundo: poliéster, spandex, algodón, nailon e hilos reciclados para aplicaciones industriales y de moda.">
-  <!-- Open Graph -->
   <meta property="og:title" content="JHIRO — Importador de Materia Prima Textil Premium">
   <meta property="og:description" content="Poliéster de grado industrial, spandex, algodón, nailon e hilos reciclados. Abastecimiento global, MOQ competitivo, soporte técnico.">
   <meta property="og:image" content="assets/images/og-image.png">
   <meta property="og:type" content="website">
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="JHIRO — Importador de Materia Prima Textil">
   <meta name="twitter:description" content="Hilos y fibras premium de origen global para fabricantes.">
   <meta name="twitter:image" content="assets/images/og-image.png">
-  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
-  <!-- Styles -->
   <link rel="stylesheet" href="assets/css/styles.css">
-  <!-- Google Fonts preconnect -->
+  <link rel="stylesheet" href="assets/css/products-section.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
@@ -161,29 +157,72 @@
       <p>Hilos y fibras de grado industrial provenientes de fábricas certificadas. Todos los artículos en stock salvo indicación.</p>
     </header>
 
-    <!-- Controles -->
-    <div class="products-controls">
-      <div class="search-wrap" role="search">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <circle cx="6.5" cy="6.5" r="4.5"/><path d="M11 11l3 3"/>
-        </svg>
-        <input
-          type="search"
-          id="product-search"
-          placeholder="Buscar por nombre, descripción o etiqueta…"
-          aria-label="Buscar productos"
-          autocomplete="off">
-      </div>
-      <div class="filter-tags" id="filter-tags" role="group" aria-label="Filtrar por categoría">
-        <span class="filter-label">Filtro:</span>
-        <!-- Renderizado por products.js -->
-      </div>
-    </div>
+    <!-- Layout: sidebar + área de productos -->
+    <div class="products-layout">
 
-    <!-- Lista de Productos -->
-    <div class="products-list" id="products-list" aria-live="polite" aria-atomic="false">
-      <!-- Renderizado por products.js -->
-    </div>
+      <!-- ── Sidebar categorías ── -->
+      <aside class="products-sidebar" id="products-sidebar" aria-label="Categorías de productos">
+        <div class="sidebar-section">
+          <div class="sidebar-heading">
+            Categorías
+            <button class="sidebar-toggle-mobile" id="sidebar-toggle-mobile" aria-label="Cerrar filtros">✕</button>
+          </div>
+          <ul class="sidebar-cat-list" id="sidebar-categories" role="list">
+            <!-- Renderizado por products-web.js -->
+          </ul>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-heading">Disponibilidad</div>
+          <ul class="sidebar-avail-list" role="list">
+            <li><button class="sidebar-avail-btn active" data-avail="all">Todos</button></li>
+            <li><button class="sidebar-avail-btn" data-avail="stock">En existencia</button></li>
+            <li><button class="sidebar-avail-btn" data-avail="limited">Stock limitado</button></li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- ── Área de productos ── -->
+      <div class="products-main">
+
+        <!-- Topbar: filtros mobile + buscador -->
+        <div class="products-topbar">
+          <div class="products-count-wrap">
+            <button class="btn-show-filters" id="btn-show-filters" aria-label="Mostrar filtros">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="4" y1="6" x2="20" y2="6"/>
+                <line x1="8" y1="12" x2="16" y2="12"/>
+                <line x1="11" y1="18" x2="13" y2="18"/>
+              </svg>
+              Filtros
+            </button>
+            <span class="products-count" id="products-count"></span>
+          </div>
+          <div class="search-wrap" role="search">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <circle cx="6.5" cy="6.5" r="4.5"/><path d="M11 11l3 3"/>
+            </svg>
+            <input
+              type="search"
+              id="product-search"
+              placeholder="Buscar productos…"
+              aria-label="Buscar productos"
+              autocomplete="off">
+          </div>
+        </div>
+
+        <!-- Spinner de carga -->
+        <div class="products-loading" id="products-loading">
+          <div class="loading-spinner"></div>
+          <p>Cargando productos...</p>
+        </div>
+
+        <!-- Grilla de productos — ID que busca products-web.js -->
+        <div class="products-grid" id="products-list" aria-live="polite" aria-atomic="false">
+          <!-- Renderizado por products-web.js -->
+        </div>
+
+      </div><!-- /products-main -->
+    </div><!-- /products-layout -->
   </div>
 </section>
 
@@ -240,7 +279,7 @@
   </div>
 </footer>
 
-<script src="assets/js/products.js"></script>
 <script src="assets/js/main.js"></script>
+<script type="module" src="assets/js/products-web.js"></script>
 </body>
 </html>

@@ -560,6 +560,14 @@ p  { line-height: 1.75; }
   color: var(--color-text-muted);
   line-height: 1.75;
 }
+.product-applications {
+  font-size: 0.9rem;
+  color: var(--color-gold-dim);
+  line-height: 1.6;
+  font-weight: 400;
+  margin-top: 0.5rem;
+  letter-spacing: 0.01em;
+}
 
 /* Contenedor para los nuevos detalles */
 .product-details-extra {
@@ -615,7 +623,7 @@ p  { line-height: 1.75; }
 }
 .no-results h3 { font-family: var(--font-display); font-weight: 300; margin-bottom: var(--space-sm); }
 
-/* ─── About Page ─────────────────────────────────────────── */
+/* ─── About Page ─────────────────────────────────────────── 
 .page-hero {
   min-height: 40vh;
   display: flex;
@@ -729,7 +737,7 @@ p  { line-height: 1.75; }
 .cert-card .label { margin-bottom: var(--space-xs); }
 .cert-card p { font-size: 0.85rem; color: var(--color-text-muted); }
 
-/* ─── Contact Page ───────────────────────────────────────── */
+/* ─── Contact Page ───────────────────────────────────────── 
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1.4fr;
@@ -831,7 +839,7 @@ p  { line-height: 1.75; }
   margin-top: var(--space-sm);
 }
 
-/* ─── FAQ Accordion ──────────────────────────────────────── */
+/* ─── FAQ Accordion ──────────────────────────────────────── 
 .faq { margin-top: var(--space-2xl); }
 .faq h2 { margin-bottom: var(--space-xl); }
 .faq-item {
@@ -865,8 +873,8 @@ p  { line-height: 1.75; }
   max-height: 300px;
   padding-bottom: var(--space-lg);
 }
-
-/* ─── Footer ─────────────────────────────────────────────── */
+*/
+ ─── Footer ─────────────────────────────────────────────── 
 .footer {
   background: var(--color-surface);
   border-top: 1px solid var(--color-border-2);
@@ -925,7 +933,7 @@ p  { line-height: 1.75; }
   gap: var(--space-sm);
 }
 
-/* ─── Animations ─────────────────────────────────────────── */
+/* ─── Animations ─────────────────────────────────────────── 
 .fade-in {
   opacity: 0;
   transform: translateY(20px);
@@ -940,7 +948,7 @@ p  { line-height: 1.75; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
 
-/* ─── Responsive ─────────────────────────────────────────── */
+/* ─── Responsive ─────────────────────────────────────────── 
 @media (max-width: 1024px) {
   .hero__stats { display: none; }
   .about-intro { grid-template-columns: 1fr; }
@@ -965,4 +973,4 @@ p  { line-height: 1.75; }
 @media (max-width: 480px) {
   :root { --space-xl: 1.5rem; --space-2xl: 2.5rem; --space-3xl: 4rem; }
   .categories-grid { grid-template-columns: 1fr; }
-}
+}*/
