@@ -100,12 +100,12 @@
 .cot-tabla {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   margin-bottom: var(--space-xl);
 }
 .cot-tabla th {
   font-family: var(--font-label);
-  font-size: 0.65rem;
+  font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -115,6 +115,7 @@
   border-bottom: 1px solid var(--color-border-2);
 }
 .cot-tabla td {
+  font-family: var(--font-label);
   padding: 1rem;
   border-bottom: 1px solid var(--color-border-2);
   color: var(--color-text);
@@ -149,7 +150,7 @@
   border-radius: var(--radius-md);
   color: var(--color-text);
   font-family: var(--font-body);
-  font-size: 0.88rem;
+  font-size: 1.25rem;
   outline: none;
   transition: border-color var(--transition);
 }
@@ -185,14 +186,14 @@
   align-items: center;
   padding: 0.4rem 0;
   font-family: var(--font-label);
-  font-size: 0.8rem;
+  font-size: 1.1rem;
   letter-spacing: 0.06em;
   color: var(--color-text-muted);
   border-bottom: 1px solid var(--color-border-2);
 }
 .cot-total-row:last-of-type { border-bottom: none; }
 .cot-total-row--main {
-  font-size: 1rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: var(--color-gold);
   padding-top: 0.75rem;

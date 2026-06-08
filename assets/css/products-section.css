@@ -325,8 +325,8 @@
 }
 
 .pcard__name {
-  font-family: var(--font-display);
-  font-size: 1.18rem;
+  font-family: var(--font-title);
+  font-size: 1.45rem;
   font-weight: 300;
   line-height: 1.25;
   color: var(--color-text);
@@ -380,7 +380,7 @@
 
 .pcard__price {
   font-family: var(--font-display);
-  font-size: 0.95rem;
+  font-size: 1.4rem;
   font-weight: 600;
   color: var(--color-gold);
 }

@@ -51,9 +51,10 @@ export function limpiarCarrito() {
  * Agregar o actualizar un producto en el carrito
  * @param {object} producto  Fila completa de productosPaginaWeb
  * @param {number} cantidadKg
+ * @param {number} pesoxcaja
  * @param {number} precioUnitario  S/. por kg (0 si precio a consultar)
  */
-export function agregarAlCarrito(producto, cantidadKg, precioUnitario = 0) {
+export function agregarAlCarrito(producto, cantidadKg, pesoxcaja, precioUnitario = 0) {
   const carrito = recuperarCarrito()
   const idx = carrito.findIndex(l => l.producto_id === producto.id)
   const linea = {
@@ -63,6 +64,7 @@ export function agregarAlCarrito(producto, cantidadKg, precioUnitario = 0) {
     color_nombre:         producto.color_nombre  || '',
     cantidad_kg:          parseFloat(cantidadKg),
     precio_unitario_pen:  parseFloat(precioUnitario),
+    peso_x_caja:          parseFloat(pesoxcaja),
     descuento_pct:        0,
   }
   if (idx >= 0) { carrito[idx] = linea } else { carrito.push(linea) }
@@ -82,7 +84,10 @@ function actualizarContadorCarrito() {
   const carrito = recuperarCarrito()
   const badge = document.getElementById('carrito-count')
   if (badge) {
-    badge.textContent = carrito.length
+    const numElement = document.getElementById('carrito-count-number')
+    if (numElement) {
+      numElement.textContent = carrito.length
+    }
     badge.style.display = carrito.length > 0 ? 'flex' : 'none'
   }
 }
@@ -171,7 +176,7 @@ function renderProductos(productos) {
     const precioHtml = p.precio_referencia
       ? `<div class="pcard__price">
            <span class="pcard__price-label">Precio ref.</span>
-           ${formatCurrency(p.precio_referencia)} / kg
+           ${formatCurrency(p.precio_referencia, p.precio_moneda)} x kg
          </div>`
       : `<div class="pcard__price pcard__price--consult">Consultar precio</div>`
 
@@ -191,7 +196,7 @@ function renderProductos(productos) {
         <div class="pcard__body">
           <span class="pcard__category">${p.categoria}</span>
           <h3 class="pcard__name">${p.nombre}</h3>
-          <p class="pcard__moq">MOQ: <strong>${p.moq || '—'}</strong></p>
+          <p class="pcard__moq">MOQ: <strong>${p.peso_caja_kg || '—'} kg</strong></p>
           <div class="pcard__colors">
             <span class="pcard__color-swatch"
                   style="background:${colorHex}"

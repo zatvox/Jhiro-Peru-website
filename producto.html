@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="assets/css/producto.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
@@ -28,8 +29,11 @@
     <div class="nav__actions">
       <button class="btn-theme" id="theme-toggle" aria-label="Cambiar tema claro/oscuro"></button>
       <a href="cotizar.html" class="btn btn-primary">
+        <i class="fas fa-shopping-cart" style="margin-right: 8px;"></i>
         Ver Cotización
-        <span class="nav-carrito-badge" id="carrito-count" style="display:none">0</span>
+        <span class="nav-carrito-badge" id="carrito-count" style="display:none">
+          <span id="carrito-count-number">0</span>
+        </span>
       </a>
       <button class="nav__hamburger" id="nav-hamburger" aria-label="Abrir menú" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -71,11 +75,23 @@
     <!-- Layout detalle -->
     <div class="pd-layout" id="pd-layout" style="display:none">
 
-      <!-- ── Imagen ── -->
+      <!-- ── Imagen e Info ── -->
       <div class="pd-gallery">
         <div class="pd-img-wrap">
           <img id="pd-img" src="" alt="" loading="eager">
           <span class="pd-badge" id="pd-badge"></span>
+        </div>
+                <!-- Precio -->
+        <div class="pd-price-wrap">
+          <div class="grid grid-2">
+            <div class="form-group"> 
+              <div class="pd-price" id="pd-price">Consultar precio</div>
+              <span class="pd-price-note">Precio referencial por kg inc IGV</span>
+            </div>
+            <div class="form-group"> 
+              <div class="pd-specs" id="pd-specs"><!-- Renderizado por JS --></div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -91,18 +107,43 @@
           <span class="pd-color-label" id="pd-color-label"></span>
         </div>
 
-        <!-- Precio -->
-        <div class="pd-price-wrap">
-          <div class="pd-price" id="pd-price">Consultar precio</div>
-          <span class="pd-price-note">Precio referencial por kg · IGV no incluido</span>
+        <!-- Acción: agregar a cotización -->
+        <div class="pd-actions">
+          <div class="grid grid-2">
+            <div class="form-group">  
+              <!-- Cantidad kg -->
+              <label for="pd-cantidad-kg" class="pd-qty-label">Cantidad (kg)</label>
+              <div class="pd-qty-row">
+                <button class="pd-qty-btn" id="pd-qty-kg-menos" aria-label="Reducir cantidad">−</button>
+                <input
+                  type="number" id="pd-cantidad-kg" class="pd-qty-input"
+                  value="500" min="1" step="100" aria-label="Cantidad en kg">
+                <button class="pd-qty-btn" id="pd-qty-kg-mas" aria-label="Aumentar cantidad">+</button>
+              </div>
+              <span class="pd-qty-hint" id="pd-qty-kg-hint">MOQ: —</span>
+            </div>
+            <!-- Cantidad unidades -->
+            <div class="form-group">
+              <label for="pd-cantidad-unidades" class="pd-qty-label">Cantidad (unidades)</label>
+              <div class="pd-qty-row">
+                <button class="pd-qty-btn" id="pd-qty-unidades-menos" aria-label="Reducir cantidad">−</button>
+                <input
+                  type="number" id="pd-cantidad-unidades" class="pd-qty-input"
+                  value="500" min="1" step="100" aria-label="Cantidad en unidades">
+                <button class="pd-qty-btn" id="pd-qty-unidades-mas" aria-label="Aumentar cantidad">+</button>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary pd-btn-cot" id="pd-btn-agregar">
+            Agregar a Cotización
+          </button>
+          <a href="index.html#products" class="btn btn-outline pd-btn-back">
+            ← Volver al catálogo
+          </a>
         </div>
 
-        <!-- Especificaciones técnicas -->
-        <div class="pd-specs" id="pd-specs">
-          <!-- Renderizado por JS -->
-        </div>
-
-        <!-- Descripción -->
+                <!-- Descripción -->
         <div class="pd-desc-section">
           <h3 class="pd-section-title">Descripción</h3>
           <p class="pd-desc" id="pd-desc"></p>
@@ -112,33 +153,6 @@
         <div class="pd-aplic-section" id="pd-aplic-section">
           <h3 class="pd-section-title">Aplicaciones</h3>
           <p class="pd-aplic" id="pd-aplic"></p>
-        </div>
-
-        <!-- Acción: agregar a cotización -->
-        <div class="pd-actions">
-          <div class="pd-qty-wrap">
-            <label for="pd-cantidad" class="pd-qty-label">Cantidad (kg)</label>
-            <div class="pd-qty-row">
-              <button class="pd-qty-btn" id="pd-qty-menos" aria-label="Reducir cantidad">−</button>
-              <input
-                type="number"
-                id="pd-cantidad"
-                class="pd-qty-input"
-                value="500"
-                min="1"
-                step="100"
-                aria-label="Cantidad en kg">
-              <button class="pd-qty-btn" id="pd-qty-mas" aria-label="Aumentar cantidad">+</button>
-            </div>
-            <span class="pd-qty-hint" id="pd-qty-hint">MOQ: —</span>
-          </div>
-
-          <button class="btn btn-primary pd-btn-cot" id="pd-btn-agregar">
-            Agregar a Cotización
-          </button>
-          <a href="index.html#products" class="btn btn-outline pd-btn-back">
-            ← Volver al catálogo
-          </a>
         </div>
 
         <!-- Toast de confirmación -->

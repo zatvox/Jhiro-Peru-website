@@ -67,10 +67,11 @@ function renderCarrito() {
   tbody.innerHTML = carrito.map((l, idx) => {
     const subtotal = (l.cantidad_kg || 0) * (l.precio_unitario_pen || 0)
     const precioStr = l.precio_unitario_pen
-      ? formatCurrency(l.precio_unitario_pen)
+    const cantidadUnidades = l.cantidad_kg && l.peso_x_caja ? Math.ceil(l.cantidad_kg / l.peso_x_caja) : 0
+      ? formatCurrency(l.precio_unitario_pen, 'USD')
       : 'A consultar'
     const subtotalStr = l.precio_unitario_pen
-      ? formatCurrency(subtotal)
+      ? formatCurrency(subtotal, 'USD')
       : '—'
     return `
       <tr data-id="${l.producto_id}">
@@ -79,6 +80,7 @@ function renderCarrito() {
           <br><small>${l.producto_categoria || ''}</small>
         </td>
         <td>${l.color_nombre || '—'}</td>
+        <td class="text-right">${l.peso_x_caja || '—'}</td>
         <td class="text-right">
           <input
             class="ct-qty-input"
@@ -89,6 +91,7 @@ function renderCarrito() {
             data-idx="${idx}"
             aria-label="Cantidad kg de ${l.producto_nombre}">
         </td>
+        <td class="text-right">${cantidadUnidades || '—'}</td>
         <td class="text-right">${precioStr}</td>
         <td class="text-right">${subtotalStr}</td>
         <td>
@@ -130,9 +133,9 @@ function renderTotales(lineas) {
   const sub = getEl('tot-subtotal')
   const igvEl = getEl('tot-igv')
   const tot   = getEl('tot-total')
-  if (sub)  sub.textContent  = formatCurrency(subtotal)
-  if (igvEl) igvEl.textContent = formatCurrency(igv)
-  if (tot)  tot.textContent  = formatCurrency(total)
+  if (sub)  sub.textContent  = formatCurrency(subtotal, 'USD')
+  if (igvEl) igvEl.textContent = formatCurrency(igv, 'USD')
+  if (tot)  tot.textContent  = formatCurrency(total, 'USD')
 }
 
 // ============================================================================
@@ -152,9 +155,9 @@ function renderResumen() {
   }
   const { subtotal, igv, total } = calcularTotalesCarrito(carrito)
   const s = getEl('res-subtotal'), g = getEl('res-igv'), t = getEl('res-total')
-  if (s) s.textContent = formatCurrency(subtotal)
-  if (g) g.textContent = formatCurrency(igv)
-  if (t) t.textContent = formatCurrency(total)
+  if (s) s.textContent = formatCurrency(subtotal, 'USD')
+  if (g) g.textContent = formatCurrency(igv, 'USD')
+  if (t) t.textContent = formatCurrency(total, 'USD')
 }
 
 // ============================================================================

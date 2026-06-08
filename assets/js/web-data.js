@@ -80,6 +80,29 @@ export async function getCategorias() {
   }
 }
 
+export async function getColoresByCategoria(categoria) {
+  try {
+    const { data, error } = await supabase
+      .from(T_PRODUCTOS)
+      .select('color_hex, color_nombre, id')
+      .eq('activo', true)
+      .eq('categoria', categoria)
+    if (error) { console.error('[Web] getColoresByCategoria:', error.message); return [] }
+    // Deduplicar por color_hex manteniendo nombre
+    const map = {}
+    ;(data || []).forEach(r => {
+      if (r.color_hex && !map[r.color_hex]) {
+        map[r.color_hex] = { color_hex: r.color_hex, color_nombre: r.color_nombre, id: r.id || 'Sin nombre' }
+      }
+    })
+    return Object.values(map)
+      .sort((a, b) => a.color_nombre.localeCompare(b.color_nombre))
+  } catch (err) {
+    console.error('[Web] getColoresByCategoria:', err)
+    return []
+  }
+}
+
 /**
  * Actualizar campos de un producto — solo para uso admin/ERP
  */
@@ -249,10 +272,11 @@ export function calcularTotalesCarrito(lineas) {
     const desc = base * ((l.descuento_pct || 0) / 100)
     return acc + base - desc
   }, 0)
-  const igv   = parseFloat((subtotal * 0.18).toFixed(2))
-  const total = parseFloat((subtotal + igv).toFixed(2))
+  const subt   = parseFloat((subtotal / 1.18).toFixed(2))
+  const total = parseFloat((subtotal).toFixed(2))
+  const igv = parseFloat(subtotal - subt).toFixed(2)
   return {
-    subtotal: parseFloat(subtotal.toFixed(2)),
+    subtotal: parseFloat(subt.toFixed(2)),
     igv,
     total,
   }

@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="assets/css/products-section.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
@@ -37,8 +38,15 @@
       <li><a href="contact.html" class="nav__link">Contacto</a></li>
     </ul>
     <div class="nav__actions">
+      <button class="btn-carrito" id="theme-toggl" aria-label="Ir a carrito"></button>
       <button class="btn-theme" id="theme-toggle" aria-label="Cambiar tema claro/oscuro"></button>
-      <a href="contact.html" class="btn btn-primary">Solicitar Cotización</a>
+      <a href="cotizar.html" class="btn btn-primary">
+        <i class="fas fa-shopping-cart" style="margin-right: 8px;"></i>
+        Ver Cotización
+        <span class="nav-carrito-badge" id="carrito-count" style="display:none">
+          <span id="carrito-count-number">0</span>
+        </span>
+      </a>
       <button class="nav__hamburger" id="nav-hamburger" aria-label="Abrir menú" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
