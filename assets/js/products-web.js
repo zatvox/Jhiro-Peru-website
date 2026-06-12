@@ -15,6 +15,23 @@ import {
 } from './web-data.js'
 
 // ============================================================================
+// IMÁGENES — soporta thumbnail_url como string o array ["url1","url2",...]
+// ============================================================================
+
+export function getImagenes(thumbnailUrl) {
+  if (Array.isArray(thumbnailUrl)) {
+    return thumbnailUrl.length ? thumbnailUrl : ['assets/images/placeholder.png']
+  }
+  if (typeof thumbnailUrl === 'string' && thumbnailUrl.trim().startsWith('[')) {
+    try {
+      const arr = JSON.parse(thumbnailUrl)
+      if (Array.isArray(arr) && arr.length) return arr
+    } catch { /* no-op */ }
+  }
+  return [thumbnailUrl || 'assets/images/placeholder.png']
+}
+
+// ============================================================================
 // ESTADO GLOBAL DE LA UI
 // ============================================================================
 
@@ -121,6 +138,12 @@ function renderSidebar() {
       state.filtros.categoria = btn.dataset.cat
       renderSidebar()
       cargarYRenderProductos()
+      
+      // Cerrar sidebar en móvil al seleccionar categoría
+      if (window.matchMedia('(max-width: 900px)').matches) {
+        document.getElementById('products-sidebar')?.classList.remove('sidebar-open')
+      }
+
     })
   })
 
@@ -186,11 +209,35 @@ function renderProductos(productos) {
          style="animation-delay:${i * 0.04}s"
          aria-label="Ver detalle de ${p.nombre}">
         <div class="pcard__thumb">
-          <img
-            src="${p.thumbnail_url || 'assets/images/placeholder.png'}"
-            alt="${p.nombre}"
-            loading="lazy"
-            onerror="this.src='assets/images/placeholder.png'">
+          ${(() => {
+            const imagenes = getImagenes(p.thumbnail_url)
+            if (imagenes.length <= 1) {
+              return `
+                <img
+                  src="${imagenes[0]}"
+                  alt="${p.nombre}"
+                  loading="lazy"
+                  onerror="this.src='assets/images/placeholder.png'">
+              `
+            }
+            return `
+              <div class="pcard__carousel" data-idx="0">
+                ${imagenes.map((img, idx) => `
+                  <img
+                    src="${img}"
+                    alt="${p.nombre}"
+                    loading="lazy"
+                    class="pcard__carousel-img${idx === 0 ? ' active' : ''}"
+                    onerror="this.src='assets/images/placeholder.png'">
+                `).join('')}
+                <button class="pcard__carousel-arrow pcard__carousel-arrow--prev" aria-label="Imagen anterior">‹</button>
+                <button class="pcard__carousel-arrow pcard__carousel-arrow--next" aria-label="Imagen siguiente">›</button>
+                <div class="pcard__carousel-dots">
+                  ${imagenes.map((_, idx) => `<span class="pcard__dot${idx === 0 ? ' active' : ''}" data-idx="${idx}"></span>`).join('')}
+                </div>
+              </div>
+            `
+          })()}
           <span class="pcard__badge ${badgeClass}">${badgeText}</span>
         </div>
         <div class="pcard__body">
@@ -213,6 +260,40 @@ function renderProductos(productos) {
       </a>
     `
   }).join('')
+}
+
+// ============================================================================
+// CARRUSELES DE IMÁGENES EN TARJETAS
+// ============================================================================
+
+function inicializarCarruseles() {
+  document.querySelectorAll('.pcard__carousel').forEach(carousel => {
+    const imgs = carousel.querySelectorAll('.pcard__carousel-img')
+    const dots = carousel.querySelectorAll('.pcard__dot')
+    const prev = carousel.querySelector('.pcard__carousel-arrow--prev')
+    const next = carousel.querySelector('.pcard__carousel-arrow--next')
+
+    function mostrar(idx) {
+      imgs.forEach((img, i) => img.classList.toggle('active', i === idx))
+      dots.forEach((dot, i) => dot.classList.toggle('active', i === idx))
+      carousel.dataset.idx = idx
+    }
+
+    prev?.addEventListener('click', e => {
+      e.preventDefault(); e.stopPropagation()
+      mostrar((parseInt(carousel.dataset.idx) - 1 + imgs.length) % imgs.length)
+    })
+    next?.addEventListener('click', e => {
+      e.preventDefault(); e.stopPropagation()
+      mostrar((parseInt(carousel.dataset.idx) + 1) % imgs.length)
+    })
+    dots.forEach(dot => {
+      dot.addEventListener('click', e => {
+        e.preventDefault(); e.stopPropagation()
+        mostrar(parseInt(dot.dataset.idx))
+      })
+    })
+  })
 }
 
 // ============================================================================
@@ -241,6 +322,7 @@ async function cargarYRenderProductos() {
 
   state.productos = filtrados
   renderProductos(filtrados)
+  inicializarCarruseles()
 }
 
 async function inicializarSidebar() {
@@ -368,6 +450,8 @@ window.JhiroWeb = {
   updateCotizacion,
   addDetalleCotizacion,
   subirComprobante,
+  // Imágenes
+  getImagenes,
   // Carrito
   recuperarCarrito,
   agregarAlCarrito,

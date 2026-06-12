@@ -951,7 +951,7 @@ p  { line-height: 1.75; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
 
-/* ─── Responsive ─────────────────────────────────────────── 
+/* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .hero__stats { display: none; }
   .about-intro { grid-template-columns: 1fr; }
@@ -976,4 +976,4 @@ p  { line-height: 1.75; }
 @media (max-width: 480px) {
   :root { --space-xl: 1.5rem; --space-2xl: 2.5rem; --space-3xl: 4rem; }
   .categories-grid { grid-template-columns: 1fr; }
-}*/
+}

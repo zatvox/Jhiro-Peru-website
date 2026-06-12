@@ -306,6 +306,79 @@
   border: 1px solid rgba(251,191,36,0.25);
 }
 
+/* ── Carrusel de imágenes en pcard ──────────────────────── */
+.pcard__carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.pcard__carousel-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  object-position: center;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.pcard__carousel-img.active {
+  opacity: 1;
+  position: relative;
+}
+.pcard__carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.45);
+  color: #fff;
+  font-size: 1.1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+.pcard__carousel:hover .pcard__carousel-arrow {
+  opacity: 1;
+}
+.pcard__carousel-arrow:hover {
+  background: rgba(0,0,0,0.7);
+}
+.pcard__carousel-arrow--prev { left: 8px; }
+.pcard__carousel-arrow--next { right: 8px; }
+.pcard__carousel-dots {
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.pcard__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.pcard__dot.active {
+  background: #fff;
+  transform: scale(1.2);
+}
+
 /* ── Cuerpo de la tarjeta ────────────────────────────────── */
 .pcard__body {
   padding: 0.875rem;

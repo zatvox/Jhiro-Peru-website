@@ -4,7 +4,7 @@
 // ============================================================================
 
 import { getProductoById, formatCurrency, getCategorias, getColoresByCategoria } from './web-data.js'
-import { agregarAlCarrito, recuperarCarrito } from './products-web.js'
+import { agregarAlCarrito, recuperarCarrito, getImagenes } from './products-web.js'
 
 // ============================================================================
 // HELPERS DE UI
@@ -43,11 +43,49 @@ function mostrarToast(msg) {
 // ============================================================================
 
 async function renderProducto(p) {
-  // Imagen
-  const img = getEl('pd-img')
-  img.src = p.thumbnail_url || 'assets/images/placeholder.png'
-  img.alt = p.nombre
-  img.onerror = () => { img.src = 'assets/images/placeholder.png' }
+  // Imagen(es) — galería/carrusel
+  const imagenes  = getImagenes(p.thumbnail_url)
+  const img       = getEl('pd-img')
+  const thumbsBox = getEl('pd-gallery-thumbs')
+  const btnPrev   = getEl('pd-img-prev')
+  const btnNext   = getEl('pd-img-next')
+  let idxActual   = 0
+
+  function mostrarImagen(idx) {
+    idxActual = idx
+    img.src = imagenes[idx]
+    img.alt = p.nombre
+    img.onerror = () => { img.src = 'assets/images/placeholder.png' }
+    thumbsBox?.querySelectorAll('.pd-thumb').forEach((t, i) => t.classList.toggle('active', i === idx))
+  }
+
+  if (imagenes.length > 1) {
+    if (thumbsBox) {
+      thumbsBox.style.display = 'flex'
+      thumbsBox.innerHTML = imagenes.map((src, idx) => `
+        <button class="pd-thumb${idx === 0 ? ' active' : ''}" data-idx="${idx}" aria-label="Ver imagen ${idx + 1}">
+          <img src="${src}" alt="${p.nombre} ${idx + 1}" onerror="this.src='assets/images/placeholder.png'">
+        </button>
+      `).join('')
+      thumbsBox.querySelectorAll('.pd-thumb').forEach(btn => {
+        btn.addEventListener('click', () => mostrarImagen(parseInt(btn.dataset.idx)))
+      })
+    }
+    if (btnPrev) {
+      btnPrev.style.display = 'flex'
+      btnPrev.addEventListener('click', () => mostrarImagen((idxActual - 1 + imagenes.length) % imagenes.length))
+    }
+    if (btnNext) {
+      btnNext.style.display = 'flex'
+      btnNext.addEventListener('click', () => mostrarImagen((idxActual + 1) % imagenes.length))
+    }
+  } else {
+    if (thumbsBox) thumbsBox.style.display = 'none'
+    if (btnPrev) btnPrev.style.display = 'none'
+    if (btnNext) btnNext.style.display = 'none'
+  }
+
+  mostrarImagen(0)
 
   // Badge de disponibilidad
   const badge = getEl('pd-badge')
